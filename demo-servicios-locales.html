@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GasfiterPro Lima - Servicio Técnico 24/7</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #0A1628;
+    --azul-medio: #0F2347;
+    --acento: #FF6B00;
+    --acento-claro: #FF8C38;
+    --blanco: #F8F5F0;
+    --gris: #8A9BB0;
+    --linea: rgba(255,107,0,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--azul);
+    color: var(--blanco);
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: rgba(10,22,40,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    color: var(--blanco);
+  }
+
+  .logo span { color: var(--acento); }
+
+  .nav-cta {
+    background: var(--acento);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--acento-claro); transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 120px 40px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg-lines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent calc(100%/12 - 1px),
+      rgba(255,107,0,0.05) calc(100%/12 - 1px),
+      rgba(255,107,0,0.05) calc(100%/12)
+    );
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(255,107,0,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,107,0,0.12);
+    border: 1px solid rgba(255,107,0,0.35);
+    color: var(--acento-claro);
+    padding: 6px 16px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .badge::before {
+    content: '';
+    width: 7px; height: 7px;
+    background: var(--acento);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .highlight {
+    color: var(--acento);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--gris);
+    line-height: 1.7;
+    max-width: 500px;
+    margin-bottom: 40px;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-sub strong { color: var(--blanco); font-weight: 500; }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--acento);
+    color: white;
+    padding: 16px 32px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+
+  .btn-primary:hover::after { transform: translateX(0); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,107,0,0.4); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--blanco);
+    padding: 16px 32px;
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+    border: 1px solid rgba(248,245,240,0.2);
+    transition: all 0.25s;
+  }
+
+  .btn-secondary:hover { border-color: var(--acento); color: var(--acento); }
+
+  /* STAT STRIP */
+  .stats-strip {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 0;
+    margin-top: 60px;
+    border-top: 1px solid var(--linea);
+    padding-top: 40px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stat {
+    flex: 1;
+    padding-right: 32px;
+    border-right: 1px solid var(--linea);
+    margin-right: 32px;
+  }
+
+  .stat:last-child { border-right: none; margin-right: 0; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--acento);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label { font-size: 0.82rem; color: var(--gris); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ─── SERVICIOS ─── */
+  .section {
+    padding: 100px 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--acento);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    margin-bottom: 60px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+    background: var(--linea);
+  }
+
+  .service-card {
+    background: var(--azul);
+    padding: 40px 32px;
+    transition: all 0.3s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: var(--acento);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .service-card:hover { background: var(--azul-medio); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .service-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  .service-card p { font-size: 0.9rem; color: var(--gris); line-height: 1.6; }
+
+  /* ─── URGENCIA ─── */
+  .urgency-bar {
+    background: var(--acento);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .urgency-bar a {
+    color: white;
+    text-decoration: none;
+    background: rgba(0,0,0,0.2);
+    padding: 8px 20px;
+    transition: background 0.2s;
+  }
+
+  .urgency-bar a:hover { background: rgba(0,0,0,0.35); }
+
+  /* ─── POR QUÉ NOSOTROS ─── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .why-list { display: flex; flex-direction: column; gap: 24px; }
+
+  .why-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 24px;
+    background: rgba(255,107,0,0.05);
+    border-left: 3px solid var(--acento);
+    transition: all 0.25s;
+  }
+
+  .why-item:hover { background: rgba(255,107,0,0.1); transform: translateX(4px); }
+
+  .why-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--acento);
+    opacity: 0.4;
+    line-height: 1;
+    min-width: 40px;
+  }
+
+  .why-item h4 { font-weight: 600; margin-bottom: 4px; font-size: 1rem; }
+  .why-item p { font-size: 0.88rem; color: var(--gris); line-height: 1.5; }
+
+  .why-visual {
+    position: relative;
+    background: var(--azul-medio);
+    padding: 50px 40px;
+    text-align: center;
+  }
+
+  .why-visual::before {
+    content: '🔧';
+    font-size: 6rem;
+    display: block;
+    margin-bottom: 20px;
+    filter: grayscale(0.3);
+  }
+
+  .why-visual-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--gris);
+    line-height: 1.2;
+  }
+
+  .why-visual-text span { color: var(--acento); }
+
+  /* ─── TESTIMONIOS ─── */
+  .testimonios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .testimonio {
+    background: var(--azul-medio);
+    padding: 32px;
+    position: relative;
+    border: 1px solid rgba(255,107,0,0.1);
+    transition: border-color 0.3s;
+  }
+
+  .testimonio:hover { border-color: rgba(255,107,0,0.35); }
+
+  .stars { color: var(--acento); font-size: 1rem; margin-bottom: 16px; letter-spacing: 2px; }
+
+  .testimonio p { font-size: 0.92rem; color: var(--gris); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+
+  .testimonio-autor { display: flex; align-items: center; gap: 12px; }
+
+  .autor-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--acento);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem;
+  }
+
+  .autor-nombre { font-weight: 600; font-size: 0.9rem; }
+  .autor-zona { font-size: 0.78rem; color: var(--gris); }
+
+  /* ─── CTA FINAL ─── */
+  .cta-final {
+    padding: 100px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-final::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,107,0,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta-final h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-final p {
+    color: var(--gris);
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-final .btn-primary {
+    font-size: 1.1rem;
+    padding: 20px 48px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 40px;
+    border-top: 1px solid var(--linea);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  footer .logo { font-size: 1.2rem; }
+
+  .footer-info { font-size: 0.82rem; color: var(--gris); }
+
+  .footer-yape {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(103,58,183,0.2);
+    border: 1px solid rgba(103,58,183,0.4);
+    padding: 8px 16px;
+    font-size: 0.82rem;
+    color: #C5A8FF;
+    font-weight: 600;
+  }
+
+  /* ─── WHATSAPP FLOAT ─── */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    z-index: 999;
+    background: #25D366;
+    color: white;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+    transition: all 0.3s;
+    animation: bounceIn 0.5s 1s ease both;
+  }
+
+  .whatsapp-float:hover { transform: scale(1.12) translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.6); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounceIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .hero { padding: 100px 20px 60px; }
+    .stats-strip { flex-direction: column; gap: 24px; }
+    .stat { border-right: none; margin-right: 0; border-bottom: 1px solid var(--linea); padding-bottom: 24px; }
+    .stat:last-child { border-bottom: none; }
+    .section { padding: 60px 20px; }
+    .why-grid { grid-template-columns: 1fr; }
+    .why-visual { display: none; }
+    footer { flex-direction: column; text-align: center; }
+    .urgency-bar { flex-direction: column; text-align: center; padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">Gasfiter<span>Pro</span></div>
+  <a href="https://wa.me/51999999999?text=Hola,%20necesito%20un%20gasfitero%20urgente" class="nav-cta" target="_blank">📞 Llamar Ahora</a>
+</nav>
+
+<!-- URGENCY BAR -->
+<div class="urgency-bar">
+  🔴 SERVICIO DE EMERGENCIA 24/7 — LLEGAMOS EN MENOS DE 60 MINUTOS
+  <a href="https://wa.me/51999999999?text=Tengo%20una%20emergencia%20de%20gasfitería" target="_blank">WhatsApp →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="badge">Lima & Callao · Desde 2015</div>
+    <h1>
+      Gasfitería
+      <span class="highlight">Rápida y</span>
+      Confiable
+    </h1>
+    <p class="hero-sub">
+      ¿Tubería rota? ¿Sin agua caliente? Llegamos a tu casa en <strong>menos de 60 minutos</strong>. 
+      Presupuesto gratis, sin letras chicas, con garantía escrita.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://wa.me/51999999999?text=Hola,%20necesito%20gasfitería%20urgente" class="btn-primary" target="_blank">
+        📱 Escribir por WhatsApp
+      </a>
+      <a href="tel:+51999999999" class="btn-secondary">
+        📞 999 999 999
+      </a>
+    </div>
+    <div class="stats-strip">
+      <div class="stat">
+        <div class="stat-num">850+</div>
+        <div class="stat-label">Clientes atendidos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">9</div>
+        <div class="stat-label">Años de experiencia</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">60'</div>
+        <div class="stat-label">Tiempo de llegada</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">Calificación Google</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="section">
+  <div class="section-label">Nuestros servicios</div>
+  <div class="section-title">¿Qué podemos<br>resolver por ti?</div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">🚰</span>
+      <h3>Tuberías y Desagüe</h3>
+      <p>Destapado de tuberías, cambio de cañerías, reparación de fugas y desagüe obstruido. Trabajo limpio y garantizado.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🔥</span>
+      <h3>Agua Caliente</h3>
+      <p>Instalación y reparación de termas, calentadores y duchas eléctricas. Todos los modelos y marcas.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🚽</span>
+      <h3>Baños y Cocinas</h3>
+      <p>Instalación de inodoros, lavabos, griferías y accesorios. Remodelación completa de baño y cocina.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🏗️</span>
+      <h3>Instalaciones Nuevas</h3>
+      <p>Proyectos completos para casas y departamentos en construcción o remodelación. Planos y certificados.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">⚡</span>
+      <h3>Emergencias 24/7</h3>
+      <p>Atención inmediata los 365 días del año. Tarifa de emergencia justa y transparente desde el inicio.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🔍</span>
+      <h3>Diagnóstico Gratis</h3>
+      <p>Revisamos el problema sin costo. Solo pagas si decides contratarnos. Sin sorpresas al final.</p>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ NOSOTROS -->
+<section class="section" style="background: var(--azul-medio);">
+  <div class="section-label">Por qué elegirnos</div>
+  <div class="section-title">Diferencia que<br>se nota</div>
+  <div class="why-grid">
+    <div class="why-list">
+      <div class="why-item">
+        <div class="why-num">01</div>
+        <div>
+          <h4>Precio fijo antes de empezar</h4>
+          <p>Te damos el presupuesto exacto antes de tocar nada. Sin cobros extra al terminar.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">02</div>
+        <div>
+          <h4>Técnicos certificados y con foto</h4>
+          <p>Todos nuestros técnicos tienen foto, DNI verificado y uniforme. Sabes quién viene a tu casa.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">03</div>
+        <div>
+          <h4>Garantía escrita de 6 meses</h4>
+          <p>Si el trabajo falla en 6 meses, volvemos sin costo. Lo ponemos por escrito.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">04</div>
+        <div>
+          <h4>Pagos: Yape, Plin o efectivo</h4>
+          <p>Aceptamos todas las formas de pago. Fácil, rápido y con comprobante.</p>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual">
+      <div class="why-visual-text">
+        Más de <span>850</span> familias en Lima<br>
+        confían en<br>
+        <span>GasfiterPro</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="section">
+  <div class="section-label">Opiniones reales</div>
+  <div class="section-title">Lo que dicen<br>nuestros clientes</div>
+  <div class="testimonios-grid">
+    <div class="testimonio">
+      <div class="stars">★★★★★</div>
+      <p>"Llamé a las 11pm por una tubería rota inundando mi baño. Llegaron en 45 minutos y lo dejaron como nuevo. El precio fue exactamente el que me dijeron por WhatsApp."</p>
+      <div class="testimonio-autor">
+        <div class="autor-avatar">MR</div>
+        <div>
+          <div class="autor-nombre">María R.</div>
+          <div class="autor-zona">Miraflores, Lima</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonio">
+      <div class="stars">★★★★★</div>
+      <p>"Cambio completo de terma en mi departamento. Rápidos, limpios y muy profesionales. Ya les recomendé a tres vecinos del edificio."</p>
+      <div class="testimonio-autor">
+        <div class="autor-avatar">JC</div>
+        <div>
+          <div class="autor-nombre">Jorge C.</div>
+          <div class="autor-zona">San Borja, Lima</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonio">
+      <div class="stars">★★★★★</div>
+      <p>"Lo que más valoro es la honestidad. Me dijeron exactamente qué tenía el problema y cuánto costaría. Sin sorpresas. Volvería a llamarlos sin dudar."</p>
+      <div class="testimonio-autor">
+        <div class="autor-avatar">AL</div>
+        <div>
+          <div class="autor-nombre">Ana L.</div>
+          <div class="autor-zona">La Molina, Lima</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <h2>¿Necesitas un<br><span style="color:var(--acento)">gasfitero ahora?</span></h2>
+  <p>Escríbenos y coordinamos la visita hoy mismo. Rápido, confiable y con garantía.</p>
+  <a href="https://wa.me/51999999999?text=Hola,%20quiero%20solicitar%20un%20servicio%20de%20gasfitería" class="btn-primary" target="_blank">
+    💬 Contactar por WhatsApp
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Gasfiter<span>Pro</span></div>
+  <div class="footer-info">
+    © 2025 GasfiterPro Lima · Servicio técnico certificado<br>
+    Atención: Lima Metropolitana y Callao
+  </div>
+  <div class="footer-yape">
+    💜 Aceptamos Yape & Plin
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://wa.me/51999999999?text=Hola,%20necesito%20gasfitería" class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
+  💬
+</a>
+
+</body>
+</html>

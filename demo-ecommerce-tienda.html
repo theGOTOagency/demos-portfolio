@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LunaStore — Moda Peruana Online</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crema: #FAF7F2;
+    --cafe: #2C1810;
+    --cafe-medio: #5C3D2E;
+    --rosa: #E8A598;
+    --rosa-oscuro: #C47B6B;
+    --dorado: #C9A96E;
+    --gris-claro: #F0EBE3;
+    --texto-suave: #8B7355;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--crema);
+    color: var(--cafe);
+    overflow-x: hidden;
+  }
+
+  /* ─── ANUNCIO TOP ─── */
+  .top-bar {
+    background: var(--cafe);
+    color: var(--crema);
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 0.82rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .top-bar span { color: var(--rosa); }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250,247,242,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(44,24,16,0.1);
+    padding: 18px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--cafe);
+    letter-spacing: -0.5px;
+  }
+
+  .logo span {
+    color: var(--rosa-oscuro);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--cafe-medio);
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--rosa-oscuro); }
+
+  .nav-right {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .nav-btn {
+    background: var(--cafe);
+    color: var(--crema);
+    padding: 10px 22px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.25s;
+    border: 2px solid var(--cafe);
+  }
+
+  .nav-btn:hover {
+    background: transparent;
+    color: var(--cafe);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 88vh;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--texto-suave);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--dorado);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 24px;
+    color: var(--cafe);
+  }
+
+  h1 em {
+    color: var(--rosa-oscuro);
+    font-style: italic;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--texto-suave);
+    line-height: 1.8;
+    max-width: 440px;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .hero-desc strong { color: var(--cafe); font-weight: 600; }
+
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-dark {
+    background: var(--cafe);
+    color: var(--crema);
+    padding: 15px 32px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-dark:hover { background: var(--cafe-medio); transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--cafe);
+    padding: 15px 32px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1.5px solid rgba(44,24,16,0.3);
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-outline:hover { border-color: var(--cafe); }
+
+  .hero-social-proof {
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(44,24,16,0.1);
+  }
+
+  .avatars {
+    display: flex;
+  }
+
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--crema);
+    background: var(--rosa);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: white;
+    margin-left: -10px;
+  }
+
+  .avatar:first-child { margin-left: 0; }
+
+  .proof-text { font-size: 0.85rem; color: var(--texto-suave); line-height: 1.4; }
+  .proof-text strong { color: var(--cafe); font-weight: 600; }
+
+  .hero-right {
+    background: var(--gris-claro);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-visual {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 60px;
+  }
+
+  .hero-img-placeholder {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, var(--rosa) 0%, var(--dorado) 60%, var(--cafe-medio) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6rem;
+    position: relative;
+    box-shadow: 24px 24px 0 rgba(44,24,16,0.08);
+  }
+
+  .price-badge {
+    position: absolute;
+    bottom: -16px;
+    right: -16px;
+    background: var(--cafe);
+    color: var(--crema);
+    padding: 14px 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    box-shadow: 4px 4px 0 var(--rosa-oscuro);
+  }
+
+  .hero-badge-top {
+    position: absolute;
+    top: -14px;
+    left: -14px;
+    background: var(--rosa-oscuro);
+    color: white;
+    padding: 8px 14px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ─── BENEFICIOS ─── */
+  .beneficios {
+    background: var(--cafe);
+    padding: 30px 48px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .beneficio {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--crema);
+  }
+
+  .beneficio-icon { font-size: 1.3rem; }
+  .beneficio-text { font-size: 0.85rem; font-weight: 500; }
+  .beneficio-text span { color: var(--rosa); display: block; font-size: 0.75rem; font-weight: 300; }
+
+  /* ─── CATÁLOGO ─── */
+  .section {
+    padding: 90px 48px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+  }
+
+  .section-title em { color: var(--rosa-oscuro); font-style: italic; }
+
+  .ver-todo {
+    color: var(--cafe-medio);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+
+  .ver-todo:hover { color: var(--rosa-oscuro); }
+
+  .productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 28px;
+  }
+
+  .producto-card {
+    background: white;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .producto-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(44,24,16,0.12); }
+
+  .producto-img {
+    aspect-ratio: 3/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .producto-img.rosa { background: linear-gradient(135deg, #F5C5BB, #E8A598); }
+  .producto-img.sage { background: linear-gradient(135deg, #C5D5C0, #A8C0A0); }
+  .producto-img.crema { background: linear-gradient(135deg, #F5EDD8, #E8D9B8); }
+  .producto-img.azul { background: linear-gradient(135deg, #C0CDD5, #A0B5C0); }
+
+  .producto-tag {
+    position: absolute;
+    top: 14px; left: 14px;
+    background: var(--rosa-oscuro);
+    color: white;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+  }
+
+  .producto-tag.nuevo { background: var(--cafe); }
+
+  .btn-add {
+    position: absolute;
+    bottom: 14px; right: 14px;
+    background: var(--cafe);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s;
+  }
+
+  .producto-card:hover .btn-add { opacity: 1; transform: translateY(0); }
+
+  .producto-info {
+    padding: 18px 20px 22px;
+  }
+
+  .producto-nombre {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+
+  .producto-detalle {
+    font-size: 0.8rem;
+    color: var(--texto-suave);
+    margin-bottom: 10px;
+  }
+
+  .producto-precios {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .precio-actual {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--cafe);
+  }
+
+  .precio-tachado {
+    font-size: 0.85rem;
+    color: var(--texto-suave);
+    text-decoration: line-through;
+  }
+
+  .descuento-badge {
+    background: var(--rosa);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 7px;
+  }
+
+  /* ─── PROCESO COMPRA ─── */
+  .proceso {
+    background: var(--gris-claro);
+    padding: 80px 48px;
+  }
+
+  .proceso-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .proceso-title em { color: var(--rosa-oscuro); font-style: italic; }
+
+  .pasos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .pasos::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: 12.5%;
+    width: 75%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--dorado), var(--rosa));
+  }
+
+  .paso {
+    text-align: center;
+    padding: 0 16px;
+  }
+
+  .paso-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--cafe);
+    color: var(--crema);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .paso-icon { font-size: 1.3rem; display: block; margin-bottom: 10px; }
+  .paso h4 { font-weight: 600; font-size: 0.95rem; margin-bottom: 8px; }
+  .paso p { font-size: 0.82rem; color: var(--texto-suave); line-height: 1.5; }
+
+  /* ─── YAPE SECTION ─── */
+  .yape-section {
+    padding: 60px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    background: white;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .yape-box {
+    background: linear-gradient(135deg, #7B2FF7, #5B00D4);
+    color: white;
+    padding: 32px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    min-width: 220px;
+  }
+
+  .yape-logo { font-size: 2.5rem; }
+  .yape-text { font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.8; }
+  .yape-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; }
+
+  .pagos-info { max-width: 400px; }
+  .pagos-info h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 12px; }
+  .pagos-info p { font-size: 0.9rem; color: var(--texto-suave); line-height: 1.7; margin-bottom: 20px; }
+
+  .metodos-pago {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .metodo {
+    background: var(--gris-claro);
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--cafe-medio);
+  }
+
+  /* ─── CTA FINAL ─── */
+  .cta-final {
+    background: var(--cafe);
+    padding: 100px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-final::before {
+    content: '✦';
+    font-family: 'Playfair Display', serif;
+    font-size: 20rem;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(255,255,255,0.02);
+    pointer-events: none;
+  }
+
+  .cta-final h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--crema);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-final h2 em { color: var(--rosa); }
+
+  .cta-final p {
+    color: rgba(250,247,242,0.6);
+    font-size: 1rem;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-rosa {
+    background: var(--rosa-oscuro);
+    color: white;
+    padding: 16px 36px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-rosa:hover { background: var(--rosa); transform: translateY(-2px); }
+
+  .btn-crema-outline {
+    background: transparent;
+    color: var(--crema);
+    padding: 16px 36px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 1.5px solid rgba(250,247,242,0.3);
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-crema-outline:hover { border-color: var(--crema); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--cafe);
+    border-top: 1px solid rgba(250,247,242,0.1);
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  footer .logo { color: var(--crema); font-size: 1.4rem; }
+  footer .logo span { color: var(--rosa); }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: rgba(250,247,242,0.5);
+    font-size: 0.82rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--rosa); }
+
+  .footer-ig {
+    color: rgba(250,247,242,0.6);
+    font-size: 0.82rem;
+  }
+
+  .footer-ig strong { color: var(--rosa); }
+
+  /* ─── WA FLOAT ─── */
+  .wa-float {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #25D366;
+    color: white;
+    padding: 14px 22px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    transition: all 0.3s;
+  }
+
+  .wa-float:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.55); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 40px 20px 60px; }
+    .section { padding: 60px 20px; }
+    .beneficios { padding: 20px; }
+    .pasos { grid-template-columns: repeat(2, 1fr); }
+    .pasos::before { display: none; }
+    .proceso { padding: 60px 20px; }
+    .yape-section { padding: 40px 20px; }
+    .cta-final { padding: 60px 20px; }
+    footer { padding: 30px 20px; flex-direction: column; text-align: center; }
+    .footer-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  🚚 Envíos a todo Lima · <span>Yape y Plin aceptados</span> · Entregas en 24-48h
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">Luna<span>Store</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Novedades</a></li>
+    <li><a href="#">Ropa</a></li>
+    <li><a href="#">Accesorios</a></li>
+    <li><a href="#">Ofertas</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://wa.me/51999999999?text=Hola!%20Vi%20su%20tienda%20y%20quiero%20hacer%20un%20pedido" class="nav-btn" target="_blank">Hacer Pedido</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Colección Verano 2025</div>
+    <h1>
+      Moda que<br>
+      te hace<br>
+      <em>brillar</em>
+    </h1>
+    <p class="hero-desc">
+      Prendas únicas con estilo peruano. <strong>Calidad premium</strong>, precios accesibles y 
+      entrega en toda Lima en 24-48 horas.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://wa.me/51999999999?text=Hola!%20Quiero%20ver%20el%20cat%C3%A1logo%20completo" class="btn-dark" target="_blank">
+        🛍️ Ver Catálogo
+      </a>
+      <a href="https://wa.me/51999999999?text=Hola!%20Tengo%20una%20consulta%20sobre%20un%20producto" class="btn-outline" target="_blank">
+        💬 Consultar
+      </a>
+    </div>
+    <div class="hero-social-proof">
+      <div class="avatars">
+        <div class="avatar">MR</div>
+        <div class="avatar">KL</div>
+        <div class="avatar">AP</div>
+        <div class="avatar">SV</div>
+      </div>
+      <div class="proof-text">
+        <strong>+1,200 clientes felices</strong><br>
+        ★★★★★ en Google y Instagram
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-img-placeholder">
+        <div class="hero-badge-top">TOP VENTAS</div>
+        👗
+        <div class="price-badge">S/. 89</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BENEFICIOS -->
+<div class="beneficios">
+  <div class="beneficio">
+    <div class="beneficio-icon">🚚</div>
+    <div class="beneficio-text">
+      Envío Express Lima
+      <span>24-48 horas hábiles</span>
+    </div>
+  </div>
+  <div class="beneficio">
+    <div class="beneficio-icon">💜</div>
+    <div class="beneficio-text">
+      Paga con Yape / Plin
+      <span>100% seguro y fácil</span>
+    </div>
+  </div>
+  <div class="beneficio">
+    <div class="beneficio-icon">🔄</div>
+    <div class="beneficio-text">
+      Cambios gratis
+      <span>Si no te queda la talla</span>
+    </div>
+  </div>
+  <div class="beneficio">
+    <div class="beneficio-icon">✅</div>
+    <div class="beneficio-text">
+      Calidad garantizada
+      <span>O te devolvemos tu dinero</span>
+    </div>
+  </div>
+</div>
+
+<!-- CATÁLOGO -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-title">Lo más<br><em>vendido</em></div>
+    <a href="https://wa.me/51999999999?text=Hola!%20Quiero%20ver%20todo%20el%20cat%C3%A1logo" class="ver-todo" target="_blank">Ver todo el catálogo →</a>
+  </div>
+  <div class="productos-grid">
+    <div class="producto-card">
+      <div class="producto-img rosa">
+        <div class="producto-tag">-20%</div>
+        👗
+        <button class="btn-add" onclick="window.open('https://wa.me/51999999999?text=Hola!%20Quiero%20el%20Vestido%20Floral%20Rosa','_blank')">Pedir →</button>
+      </div>
+      <div class="producto-info">
+        <div class="producto-nombre">Vestido Floral Rosa</div>
+        <div class="producto-detalle">Tallas S, M, L · Envío Lima</div>
+        <div class="producto-precios">
+          <div class="precio-actual">S/. 89</div>
+          <div class="precio-tachado">S/. 110</div>
+          <div class="descuento-badge">-20%</div>
+        </div>
+      </div>
+    </div>
+    <div class="producto-card">
+      <div class="producto-img sage">
+        <div class="producto-tag nuevo">NUEVO</div>
+        👚
+        <button class="btn-add" onclick="window.open('https://wa.me/51999999999?text=Hola!%20Quiero%20el%20Bluson%20Sage','_blank')">Pedir →</button>
+      </div>
+      <div class="producto-info">
+        <div class="producto-nombre">Blusón Sage Premium</div>
+        <div class="producto-detalle">Tallas S, M, L, XL</div>
+        <div class="producto-precios">
+          <div class="precio-actual">S/. 65</div>
+        </div>
+      </div>
+    </div>
+    <div class="producto-card">
+      <div class="producto-img crema">
+        <div class="producto-tag">-15%</div>
+        👖
+        <button class="btn-add" onclick="window.open('https://wa.me/51999999999?text=Hola!%20Quiero%20el%20Palazzo%20Crema','_blank')">Pedir →</button>
+      </div>
+      <div class="producto-info">
+        <div class="producto-nombre">Palazzo Crema Lino</div>
+        <div class="producto-detalle">Tallas S, M, L</div>
+        <div class="producto-precios">
+          <div class="precio-actual">S/. 72</div>
+          <div class="precio-tachado">S/. 85</div>
+          <div class="descuento-badge">-15%</div>
+        </div>
+      </div>
+    </div>
+    <div class="producto-card">
+      <div class="producto-img azul">
+        <div class="producto-tag nuevo">NUEVO</div>
+        🧥
+        <button class="btn-add" onclick="window.open('https://wa.me/51999999999?text=Hola!%20Quiero%20el%20Blazer%20Azul','_blank')">Pedir →</button>
+      </div>
+      <div class="producto-info">
+        <div class="producto-nombre">Blazer Azul Acero</div>
+        <div class="producto-detalle">Tallas S, M, L · Entretela premium</div>
+        <div class="producto-precios">
+          <div class="precio-actual">S/. 145</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO COMPRAR -->
+<section class="proceso">
+  <div class="proceso-title">¿Cómo <em>comprar?</em></div>
+  <div class="pasos">
+    <div class="paso">
+      <div class="paso-num">1</div>
+      <span class="paso-icon">📱</span>
+      <h4>Elige tu prenda</h4>
+      <p>Escríbenos por WhatsApp con el nombre del producto y tu talla</p>
+    </div>
+    <div class="paso">
+      <div class="paso-num">2</div>
+      <span class="paso-icon">💬</span>
+      <h4>Confirmamos</h4>
+      <p>Te confirmamos disponibilidad y el precio final con envío incluido</p>
+    </div>
+    <div class="paso">
+      <div class="paso-num">3</div>
+      <span class="paso-icon">💜</span>
+      <h4>Yapeas / Plinas</h4>
+      <p>Realizas el pago fácil con Yape o Plin y nos envías el comprobante</p>
+    </div>
+    <div class="paso">
+      <div class="paso-num">4</div>
+      <span class="paso-icon">📦</span>
+      <h4>Recibe en casa</h4>
+      <p>Tu pedido llega en 24-48h en toda Lima. Te mandamos el tracking</p>
+    </div>
+  </div>
+</section>
+
+<!-- PAGOS -->
+<div class="yape-section">
+  <div class="yape-box">
+    <div class="yape-logo">💜</div>
+    <div class="yape-text">Acepta pagos con</div>
+    <div class="yape-num">Yape & Plin</div>
+    <div class="yape-text">Transferencia · Efectivo</div>
+  </div>
+  <div class="pagos-info">
+    <h3>Pago fácil y <em style="font-style:italic;color:var(--rosa-oscuro)">seguro</em></h3>
+    <p>Aceptamos todos los métodos de pago más populares en Perú. Sin complicaciones, sin apps extra, sin tarjetas. Paga como más te guste.</p>
+    <div class="metodos-pago">
+      <div class="metodo">💜 Yape</div>
+      <div class="metodo">🔵 Plin</div>
+      <div class="metodo">🏦 Transferencia</div>
+      <div class="metodo">💵 Efectivo</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <h2>¿Lista para tu<br><em>nuevo look?</em></h2>
+  <p>Escríbenos ahora y te asesoramos sin compromiso</p>
+  <div class="cta-btns">
+    <a href="https://wa.me/51999999999?text=Hola!%20Quiero%20hacer%20un%20pedido%20en%20LunaStore" class="btn-rosa" target="_blank">
+      💬 Hacer pedido por WhatsApp
+    </a>
+    <a href="https://wa.me/51999999999?text=Hola!%20Quiero%20ver%20el%20cat%C3%A1logo%20completo" class="btn-crema-outline" target="_blank">
+      🛍️ Ver catálogo completo
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Luna<span>Store</span></div>
+  <ul class="footer-links">
+    <li><a href="#">Políticas de cambio</a></li>
+    <li><a href="#">Envíos</a></li>
+    <li><a href="#">Sobre nosotras</a></li>
+  </ul>
+  <div class="footer-ig">
+    📸 Síguenos: <strong>@lunastore.pe</strong>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/51999999999?text=Hola!%20Quiero%20hacer%20un%20pedido" class="wa-float" target="_blank">
+  💬 Hacer pedido
+</a>
+
+</body>
+</html>
